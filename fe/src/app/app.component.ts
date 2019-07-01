@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import * as leaflet from 'leaflet-gpx';
+import { Component, OnInit, ElementRef } from '@angular/core';
+import { RoutesService } from './route/services/route-service';
 
 @Component({
   selector: 'app-root',
@@ -9,16 +9,14 @@ import * as leaflet from 'leaflet-gpx';
 export class AppComponent implements OnInit {
   title = 'routes';
 
+  constructor(private routesService: RoutesService, private element: ElementRef) {
+
+  }
+
   ngOnInit() {
-    const map = leaflet.map('mapid').setView([51.505, -0.09], 13);
+    const div = this.element.nativeElement.querySelector('#mapid');
+    const gpx = 'http://localhost:4200/assets/test.gpx';
 
-    leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-
-    const gpx = 'http://localhost:4200/assets/test.gpx'; // URL to your GPX file or the GPX itself
-    new leaflet.GPX(gpx, { async: true }).on('loaded', function(e) {
-      map.fitBounds(e.target.getBounds());
-    }).addTo(map);
+    this.routesService.drawMap(div, gpx);
   }
 }
