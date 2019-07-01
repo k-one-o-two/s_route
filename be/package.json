@@ -1,0 +1,17 @@
+{
+  "name": "routes-be",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "@koa/cors": "^3.0.0",
+    "dotenv": "^8.0.0",
+    "koa": "^2.7.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "k102",
+  "license": "ISC"
+}
