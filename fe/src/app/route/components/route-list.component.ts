@@ -13,6 +13,6 @@ export class RouteListComponent implements OnInit {
   constructor(private routesService: RoutesService) { }
 
   ngOnInit() {
-    this.routesList = this.routesService.getList();
+    // this.routesList = this.routesService.getList();
   }
 }

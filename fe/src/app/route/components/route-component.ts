@@ -14,6 +14,6 @@ export class RouteComponent implements OnInit {
   constructor(private routesService: RoutesService) { }
 
   ngOnInit() {
-    this.routeInfo = this.routesService.getInfo(this.routeid);
+    // this.routeInfo = this.routesService.getInfo(this.routeid);
   }
 }
