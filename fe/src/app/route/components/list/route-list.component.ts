@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { RoutesService } from '../services/route-service';
+import { RoutesService } from '../../services/route-service';
+
+import { IRoute } from '../../interfaces';
 
 @Component({
   selector: 'app-route-list',
@@ -8,13 +10,13 @@ import { RoutesService } from '../services/route-service';
 })
 
 export class RouteListComponent implements OnInit {
-  routesList = [];
+  routesList: IRoute[] = [];
 
   constructor(private routesService: RoutesService) { }
 
   ngOnInit() {
     console.info('inited');
-    // this.routesService.getList()
-      // .subscribe(data => this.routesList = data);
+    this.routesService.getList()
+      .subscribe((data: IRoute[]) => this.routesList = data);
   }
 }

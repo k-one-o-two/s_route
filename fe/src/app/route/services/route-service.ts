@@ -8,7 +8,7 @@ export class RoutesService {
   path: string;
 
   constructor(private http: HttpClient) {
-    this.path = ''
+    this.path = environment.apiUrl;
   }
 
   getList() {
@@ -19,8 +19,12 @@ export class RoutesService {
     return this.http.get(this.path + '/route?id=' + routeId);
   }
 
+  getComments(routeId: number) {
+    return this.http.get(this.path + '/route-comments?routeId=' + routeId);
+  }
+
   drawMap(element, gpx) {
-    const map = leaflet.map(element);//.setView([51.505, -0.09], 13);
+    const map = leaflet.map(element);
 
     leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

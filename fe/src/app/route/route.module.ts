@@ -1,8 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { RouteComponent } from './components/route-component';
-import { RouteListComponent } from './components/route-list.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
+import { RouteComponent } from './components/route/route-component';
+import { RouteListComponent } from './components/list/route-list.component';
+
+import { RoutesService } from './services/route-service';
 
 @NgModule({
   declarations: [
@@ -11,9 +15,11 @@ import { RouteListComponent } from './components/route-list.component';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
   ],
   exports: [
     RouteListComponent,
-  ]
+  ],
+  providers: [RoutesService]
 })
 export class RouteModule { }

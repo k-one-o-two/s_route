@@ -1,11 +1,7 @@
 import { Component, OnInit, Input, ElementRef } from '@angular/core';
-import { RoutesService } from '../services/route-service';
+import { RoutesService } from '../../services/route-service';
 
-interface IRoute {
-  creatorId: number,
-  stravaId: number,
-  gpxName: string
-}
+import { IRoute } from '../../interfaces';
 
 @Component({
   selector: 'app-route',
@@ -24,7 +20,7 @@ export class RouteComponent implements OnInit {
 
   ngOnInit() {
     this.routesService.getInfo(this.id)
-      .subscribe(data: IRoute => {
+      .subscribe((data: IRoute) => {
         this.routeInfo = data;
 
         const div = this.element.nativeElement.querySelector('.map');

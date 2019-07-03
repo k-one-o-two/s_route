@@ -20,14 +20,19 @@ app.use(koaCors());
 
 router.get('/user/', async (ctx, next) => {
   const id = ctx.request.query.id;
+  console.info({
+    id
+  });
   const user = await strava.getUser(id);
-
+  console.info({
+    user
+  });
   ctx.body = user;
 })
 
-router.get('/route/', async (ctx, next) => {a
+router.get('/route/', async (ctx, next) => {
   const id = ctx.request.query.id;
-  ctx.body = [{}];
+  ctx.body = mockData.routes[0];
 });
 
 router.get('/routes/', async (ctx, next) => {
@@ -35,7 +40,7 @@ router.get('/routes/', async (ctx, next) => {
 });
 
 router.get('/route-comments/', async (ctx, next) => {
-
+  ctx.body = mockData.comments;
 });
 
 router.get('/search-routes/', async (ctx, next) => {
