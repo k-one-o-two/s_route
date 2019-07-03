@@ -1,19 +1,36 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import { RoutesService } from '../services/route-service';
+
+interface IRoute {
+  creatorId: number,
+  stravaId: number,
+  gpxName: string
+}
 
 @Component({
   selector: 'app-route',
   templateUrl: './route-component.html',
-  styleUrls: ['./route-component.scss']
+  styleUrls: ['./route-component.css']
 })
 
 export class RouteComponent implements OnInit {
-  @Input() routeid;
+  @Input() id;
   routeInfo = {};
 
-  constructor(private routesService: RoutesService) { }
+  constructor(
+    private routesService: RoutesService,
+    private element: ElementRef
+  ) { }
 
   ngOnInit() {
-    // this.routeInfo = this.routesService.getInfo(this.routeid);
+    this.routesService.getInfo(this.id)
+      .subscribe(data: IRoute => {
+        this.routeInfo = data;
+
+        const div = this.element.nativeElement.querySelector('.map');
+        const gpx = `http://localhost:3000/media-gpx/?name=${this.routeInfo.gpxName}`;
+
+        this.routesService.drawMap(div, gpx);
+      })
   }
 }

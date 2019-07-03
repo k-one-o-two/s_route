@@ -1,16 +1,22 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 import * as leaflet from 'leaflet-gpx';
 
 @Injectable()
 export class RoutesService {
-  constructor() { }
+  path: string;
 
-  getList() {
-
+  constructor(private http: HttpClient) {
+    this.path = ''
   }
 
-  getInfo(routeId) {
+  getList() {
+    return this.http.get(this.path + '/routes');
+  }
 
+  getInfo(routeId: number) {
+    return this.http.get(this.path + '/route?id=' + routeId);
   }
 
   drawMap(element, gpx) {

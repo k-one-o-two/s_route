@@ -4,7 +4,7 @@ import { RoutesService } from '../services/route-service';
 @Component({
   selector: 'app-route-list',
   templateUrl: './route-list-component.html',
-  styleUrls: ['./route-list-component.scss']
+  styleUrls: ['./route-list-component.css']
 })
 
 export class RouteListComponent implements OnInit {
@@ -13,6 +13,8 @@ export class RouteListComponent implements OnInit {
   constructor(private routesService: RoutesService) { }
 
   ngOnInit() {
-    // this.routesList = this.routesService.getList();
+    console.info('inited');
+    // this.routesService.getList()
+      // .subscribe(data => this.routesList = data);
   }
 }

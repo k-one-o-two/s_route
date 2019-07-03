@@ -1,22 +1,18 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
-import { RoutesService } from './route/services/route-service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
   title = 'routes';
 
-  constructor(private routesService: RoutesService, private element: ElementRef) {
+  constructor() {
 
   }
 
   ngOnInit() {
-    const div = this.element.nativeElement.querySelector('#mapid');
-    const gpx = 'http://localhost:4200/assets/test.gpx';
 
-    this.routesService.drawMap(div, gpx);
   }
 }

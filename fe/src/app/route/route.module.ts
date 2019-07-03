@@ -11,8 +11,6 @@ import { RouteListComponent } from './components/route-list.component';
   ],
   imports: [
     CommonModule,
-    RouteComponent,
-    RouteListComponent,
   ],
   exports: [
     RouteListComponent,
