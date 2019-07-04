@@ -1,0 +1,17 @@
+<div class="branding">
+       <a href="javascript://" class="nav-link">
+           <clr-icon shape="circle"></clr-icon>
+           <span class="title">s_route app</span>
+       </a>
+   </div>
+   <div class="header-actions">
+       <a href="javascript://" class="nav-link nav-icon-text">
+           <clr-icon shape="user"></clr-icon>
+           <span class="nav-text">
+             {{ currentUser.firstname }} {{ currentUser.lastname }}
+           </span>
+       </a>
+       <div class="user-ava">
+         <img [src]="currentUser.profile_medium">
+       </div>
+   </div>

@@ -24,7 +24,7 @@ export class RouteComponent implements OnInit {
         this.routeInfo = data;
 
         const div = this.element.nativeElement.querySelector('.map');
-        const gpx = `http://localhost:3000/media-gpx/?name=${this.routeInfo.gpxName}`;
+        const gpx = `http://localhost:3000/media-gpx/?name=${this.routeInfo['gpxName']}`;
 
         this.routesService.drawMap(div, gpx);
       })

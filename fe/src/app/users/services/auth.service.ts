@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { UserService } from './user-service';
 
 interface IUser {
   name: string
@@ -14,7 +15,7 @@ export class AuthService {
 
   private currentUser = {};
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private userService: UserService) {
     this.path = environment.apiUrl;
   }
 
@@ -24,6 +25,13 @@ export class AuthService {
 
   setAuthCode(code: string) {
     localStorage.setItem(this.localStorageKey, code);
+    return this.http.post(this.path + '/login', { code }).subscribe((data) => {
+      this.userService.setCurrentUser(data['athlete']);
+    });
+  }
+
+  getAuthCode() {
+    return localStorage.getItem(this.localStorageKey);
   }
 
   logout() {

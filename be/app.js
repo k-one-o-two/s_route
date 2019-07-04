@@ -2,31 +2,31 @@ require('dotenv')
   .config();
 const Koa = require('koa');
 const Router = require('koa-router');
+const bodyParser = require('koa-bodyparser');
 
 const koaCors = require('@koa/cors');
 const router = new Router();
 const app = new Koa();
 
 const Strava = require('./services/strava-api');
-const strava = new Strava();
+const strava = new Strava(process.env);
 const fs = require('fs');
 
 const mockData = require('./data/mocks');
 
 
 app.use(koaCors());
-
+app.use(bodyParser());
 // GETTERS
 
 router.get('/user/', async (ctx, next) => {
   const id = ctx.request.query.id;
-  console.info({
-    id
-  });
   const user = await strava.getUser(id);
-  console.info({
-    user
-  });
+  ctx.body = user;
+})
+
+router.get('/current-user/', async (ctx, next) => {
+  const user = await strava.getCurrentUser();
   ctx.body = user;
 })
 
@@ -60,7 +60,18 @@ router.get('/media-img/', async (ctx, next) => {
 
 // SETTERS
 
-// router.post('')
+router.post('/login/', async (ctx, next) => {
+  const code = ctx.request.body['code'];
+  console.info({
+    code
+  });
+  if (code) {
+    const currentUser = await strava.setCode(code);
+    ctx.body = currentUser;
+  } else {
+    ctx.body = null;
+  }
+});
 
 app
   .use(router.routes())

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +11,11 @@ import { ActivatedRoute } from '@angular/router';
 export class LoginComponent implements OnInit {
   authCode: string;
 
-  constructor(private authService: AuthService, private activatedRoute: ActivatedRoute) { }
+  constructor(
+    private authService: AuthService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) { }
 
   public login() {
     this.authService.login();
@@ -22,6 +26,10 @@ export class LoginComponent implements OnInit {
 
   public ngOnInit() {
     this.authCode = this.activatedRoute.snapshot.queryParams['code'];
+    if (this.authCode) {
+      this.authService.setAuthCode(this.authCode);
+      this.router.navigate(['/routes']);
+    }
   }
 
 }

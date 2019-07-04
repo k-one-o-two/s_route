@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { LoginComponent } from './components/login.component';
 import { AuthService } from './services/auth.service';
+import { UserService } from './services/user-service';
 import { LoginGuard } from './guards/login.guard';
 
 @NgModule({
@@ -18,6 +19,6 @@ import { LoginGuard } from './guards/login.guard';
   exports: [
     LoginComponent,
   ],
-  providers: [AuthService, LoginGuard]
+  providers: [AuthService, LoginGuard, UserService]
 })
 export class UsersModule { }
