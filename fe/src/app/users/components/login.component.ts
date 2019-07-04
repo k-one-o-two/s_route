@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,15 +8,20 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./login.component.css']
 })
 
-export class LoginComponent {
-  loginForm = new FormGroup({
-    userName: new FormControl(''),
-    userPass: new FormControl('')
-  });
+export class LoginComponent implements OnInit {
+  authCode: string;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private activatedRoute: ActivatedRoute) { }
 
-  login() {
-    this.authService.login(this.loginForm.value);
+  public login() {
+    this.authService.login();
   }
+
+  public logoff() {
+  }
+
+  public ngOnInit() {
+    this.authCode = this.activatedRoute.snapshot.queryParams['code'];
+  }
+
 }

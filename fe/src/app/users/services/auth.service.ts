@@ -10,7 +10,7 @@ interface IUser {
 @Injectable()
 export class AuthService {
   path: string;
-  localStorageKey = '';
+  localStorageKey = 'stravaAuthCode';
 
   private currentUser = {};
 
@@ -18,20 +18,24 @@ export class AuthService {
     this.path = environment.apiUrl;
   }
 
-  login(formValues: any) {
+  login() {
+    window.open(environment.oauth.url);
+  }
 
+  setAuthCode(code: string) {
+    localStorage.setItem(this.localStorageKey, code);
   }
 
   logout() {
-    const hash = this.makeHash(this.currentUser.name)
-    localStorage.setItem(this.localStorageKey, hash);
+    // const hash = this.makeHash(this.currentUser.name)
+    // localStorage.setItem(this.localStorageKey, hash);
   }
 
   isLogged(): boolean {
-    return false;
+    return !!localStorage.getItem(this.localStorageKey);
   }
 
-  private makeHash(userName) {
-
-  }
+  // private makeHash(userName) {
+  //
+  // }
 }

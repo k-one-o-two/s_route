@@ -5,7 +5,13 @@
 export const environment = {
   production: false,
 
-  apiUrl: 'http://localhost:3000'
+  apiUrl: 'http://localhost:3000',
+
+  oauth: {
+    clientId: 36713,
+    url: `https://www.strava.com/oauth/authorize?client_id=36713&response_type=code&redirect_uri=http://localhost:4200/get-code&approval_prompt=force`
+    // url: 'http://www.strava.com/oauth/authorize?client_id=36713&response_type=code&redirect_uri=http://localhost/exchange_token&approval_prompt=force&scope=profile:read'
+  }
 };
 
 /*
