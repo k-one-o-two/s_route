@@ -13,6 +13,8 @@ export class HeaderComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit() {
+    console.info('>>>>');
+
     this.userService.getCurrentUser()
       .subscribe(user => {
         console.info({ user });
