@@ -1,13 +1,19 @@
 <div class="clr-row">
     <div class="clr-col-lg-6 clr-col-12">
-        <a href="..." class="card clickable">
+        <a (click)="toRoute()" *ngIf="routeInfo" class="card clickable">
+            <div class="card-header">
+                {{ routeInfo.info.name }}
+            </div>
             <div class="card-img">
                 <div class="map"></div>
             </div>
             <div class="card-block">
                 <p class="card-text">
-                    ...
+                    Description: {{ routeInfo.info.description }}
                 </p>
+            </div>
+            <div class="card-footer">
+              Created by: {{ routeInfo.info.athlete.firstname }} {{ routeInfo.info.athlete.lastname }}
             </div>
         </a>
     </div>

@@ -21,6 +21,7 @@ export class RouteComponent implements OnInit {
   ngOnInit() {
     this.routesService.getInfo(this.id)
       .subscribe((data: IRoute) => {
+        console.info({ data });
         this.routeInfo = data;
 
         const div = this.element.nativeElement.querySelector('.map');

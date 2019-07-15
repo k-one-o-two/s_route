@@ -10,33 +10,37 @@ Injectable();
 export class UserService {
   private currentUser: {};
   path = environment.apiUrl;
+  localStorageKey = 'currentUser';
 
   constructor(private http: HttpClient) {
 
   }
 
   setCurrentUser(user) {
+    console.info('setCurrentUser', { user });
     this.currentUser = user;
+    localStorage.setItem(this.localStorageKey, JSON.stringify(user));
   }
 
   getLastSavedUser() {
-    if (this.currentUser && !this.currentUser['errors']) {
-      return this.currentUser
+    const user = this.currentUser || JSON.parse(localStorage.getItem(this.localStorageKey));
+    if (user && !user['errors']) {
+      return user;
     } else {
       return null;
     }
   }
 
   getCurrentUser() {
-    if (!this.currentUser || this.currentUser['errors']) {
-      console.info('HTTP user call');
+    const user = this.currentUser || JSON.parse(localStorage.getItem(this.localStorageKey));
+    if (!user || user['errors']) {
       return this.http.get(this.path + '/current-user').pipe(
-        tap((user) => {
-          this.setCurrentUser(user);
+        tap((newUser) => {
+          this.setCurrentUser(newUser);
         })
       );
     } else {
-      return of(this.currentUser);
+      return of(user);
     }
   }
 }
