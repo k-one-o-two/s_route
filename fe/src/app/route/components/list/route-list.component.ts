@@ -11,6 +11,7 @@ import { IRoute } from '../../interfaces';
 
 export class RouteListComponent implements OnInit {
   routesList: IRoute[] = [];
+  cardsOnRow = 3;
 
   constructor(private routesService: RoutesService) { }
 

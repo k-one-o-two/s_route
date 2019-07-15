@@ -14,6 +14,14 @@ module.exports = class Strava {
     });
   }
 
+  async getRoute(id) {
+    const rGet = util.promisify(strava.routes.get);
+
+    return await rGet({
+      id
+    });
+  }
+
   async getStravaRoute(id) {
 
   }

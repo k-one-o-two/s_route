@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { UserService } from './user-service';
+import { tap } from 'rxjs/operators';
 
 interface IUser {
   name: string
@@ -20,14 +21,15 @@ export class AuthService {
   }
 
   login() {
-    window.open(environment.oauth.url);
+    window.location.href = environment.oauth.url;
   }
 
   setAuthCode(code: string) {
     localStorage.setItem(this.localStorageKey, code);
-    return this.http.post(this.path + '/login', { code }).subscribe((data) => {
-      this.userService.setCurrentUser(data['athlete']);
-    });
+    return this.http.post(this.path + '/login', { code })
+      .pipe(
+        tap(data => this.userService.setCurrentUser(data['athlete']))
+      );
   }
 
   getAuthCode() {
@@ -35,15 +37,10 @@ export class AuthService {
   }
 
   logout() {
-    // const hash = this.makeHash(this.currentUser.name)
-    // localStorage.setItem(this.localStorageKey, hash);
+    localStorage.setItem(this.localStorageKey, null);
   }
 
   isLogged(): boolean {
-    return !!localStorage.getItem(this.localStorageKey);
+    return !!localStorage.getItem(this.localStorageKey) && !!this.userService.getLastSavedUser();
   }
-
-  // private makeHash(userName) {
-  //
-  // }
 }

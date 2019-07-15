@@ -26,9 +26,13 @@ export class LoginComponent implements OnInit {
 
   public ngOnInit() {
     this.authCode = this.activatedRoute.snapshot.queryParams['code'];
+    console.info(this.authCode);
     if (this.authCode) {
-      this.authService.setAuthCode(this.authCode);
-      this.router.navigate(['/routes']);
+      this.authService.setAuthCode(this.authCode)
+        .subscribe(() => {
+          console.info('gonna redirect');
+          this.router.navigate(['/routes']);
+        });
     }
   }
 

@@ -9,9 +9,11 @@ export class LoginGuard implements CanActivate {
 
   canActivate() {
     const logged = this.authService.isLogged();
+    console.info({ logged });
     if (logged) {
       return true;
     } else {
+      this.authService.logout();
       this.router.navigate(['login']);
       return false;
     }

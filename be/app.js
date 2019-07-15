@@ -27,12 +27,17 @@ router.get('/user/', async (ctx, next) => {
 
 router.get('/current-user/', async (ctx, next) => {
   const user = await strava.getCurrentUser();
+  console.info({
+    user
+  });
   ctx.body = user;
 })
 
 router.get('/route/', async (ctx, next) => {
   const id = ctx.request.query.id;
-  ctx.body = mockData.routes[0];
+  const selectedRoute = mockData.routes[0];
+  selectedRoute.info = await strava.getRoute(selectedRoute.stravaId);
+  ctx.body = selectedRoute;
 });
 
 router.get('/routes/', async (ctx, next) => {
@@ -67,6 +72,9 @@ router.post('/login/', async (ctx, next) => {
   });
   if (code) {
     const currentUser = await strava.setCode(code);
+    console.info({
+      currentUser
+    });
     ctx.body = currentUser;
   } else {
     ctx.body = null;
