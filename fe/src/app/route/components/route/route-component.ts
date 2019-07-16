@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, AfterViewInit } from '@angular/core';
 import { RoutesService } from '../../services/route-service';
 
 import { IRoute } from '../../interfaces';
@@ -9,9 +9,10 @@ import { IRoute } from '../../interfaces';
   styleUrls: ['./route-component.css']
 })
 
-export class RouteComponent implements OnInit {
+export class RouteComponent implements OnInit, AfterViewInit {
   @Input() id;
-  routeInfo = {};
+  routeInfo = null;
+  dataReady = false;
 
   constructor(
     private routesService: RoutesService,
@@ -23,11 +24,18 @@ export class RouteComponent implements OnInit {
       .subscribe((data: IRoute) => {
         console.info({ data });
         this.routeInfo = data;
-
-        const div = this.element.nativeElement.querySelector('.map');
-        const gpx = `http://localhost:3000/media-gpx/?name=${this.routeInfo['gpxName']}`;
-
-        this.routesService.drawMap(div, gpx);
+        this.dataReady = true;
       })
+  }
+
+  ngAfterViewInit() {
+    if (!this.routeInfo) {
+      return;
+    }
+
+    const div = this.element.nativeElement.querySelector('.map');
+    const gpx = `http://localhost:3000/media-gpx/?name=${this.routeInfo['gpxName']}`;
+
+    this.routesService.drawMap(div, gpx);
   }
 }
