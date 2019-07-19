@@ -7,11 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   title = 'routes';
+  public createDialogVisible: boolean;
 
   constructor() {
   }
 
   ngOnInit() {
 
+  }
+
+  showCreateDialog() {
+    console.info('show');
+    this.createDialogVisible = true;
   }
 }

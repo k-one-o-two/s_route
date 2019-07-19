@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { UserService } from '../../users/services/user-service';
 
 @Component({
@@ -9,16 +9,19 @@ import { UserService } from '../../users/services/user-service';
 
 export class HeaderComponent implements OnInit {
   public currentUser = {};
+  @Output() createRoute = new EventEmitter();
 
   constructor(private userService: UserService) { }
 
   ngOnInit() {
-    console.info('>>>>');
-
     this.userService.getCurrentUser()
       .subscribe(user => {
-        console.info({ user });
         this.currentUser = user
       });
+  }
+
+  emitCreateEvt() {
+    console.info('emitCreateEvt');
+    this.createRoute.emit({ create: true });
   }
 }

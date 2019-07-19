@@ -1,0 +1,28 @@
+<clr-wizard [(clrWizardOpen)]="isOpen">
+    <clr-wizard-title>Create a new route</clr-wizard-title>
+
+    <clr-wizard-button [type]="'cancel'">Cancel</clr-wizard-button>
+    <clr-wizard-button [type]="'previous'">Back</clr-wizard-button>
+    <clr-wizard-button [type]="'next'">Next</clr-wizard-button>
+    <clr-wizard-button [type]="'finish'">Finish</clr-wizard-button>
+
+    <clr-wizard-page>
+        <ng-template clrPageTitle>Strava ID</ng-template>
+        <form [formGroup]="stepOneForm" clrForm>
+            <clr-input-container>
+                <label>Link to route</label>
+                <input clrInput type="text" name="example" formControlName="stravaLink"/>
+            </clr-input-container>
+        </form>
+    </clr-wizard-page>
+
+    <clr-wizard-page>
+        <ng-template clrPageTitle>Name and description</ng-template>
+        ...
+    </clr-wizard-page>
+
+    <clr-wizard-page>
+        <ng-template clrPageTitle>Preview</ng-template>
+        ...
+    </clr-wizard-page>
+</clr-wizard>
