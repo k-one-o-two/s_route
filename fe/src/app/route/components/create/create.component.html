@@ -11,8 +11,9 @@
         <form [formGroup]="stepOneForm" clrForm>
             <clr-input-container>
                 <label>Link to route</label>
-                <input clrInput type="text" name="example" formControlName="stravaLink"/>
+                <input required clrInput type="text" name="example" formControlName="stravaLink"/>
             </clr-input-container>
+            <button class="btn btn-primary" type="submit" (click)="submit()">Submit</button>
         </form>
     </clr-wizard-page>
 
