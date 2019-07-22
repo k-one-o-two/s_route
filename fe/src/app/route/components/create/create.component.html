@@ -1,4 +1,4 @@
-<clr-wizard [(clrWizardOpen)]="isOpen">
+<clr-wizard #wizard [(clrWizardOpen)]="isOpen">
     <clr-wizard-title>Create a new route</clr-wizard-title>
 
     <clr-wizard-button [type]="'cancel'">Cancel</clr-wizard-button>
@@ -6,14 +6,14 @@
     <clr-wizard-button [type]="'next'">Next</clr-wizard-button>
     <clr-wizard-button [type]="'finish'">Finish</clr-wizard-button>
 
-    <clr-wizard-page>
+    <clr-wizard-page [clrWizardPageNextDisabled]="!stepOneReady">
         <ng-template clrPageTitle>Strava ID</ng-template>
         <form [formGroup]="stepOneForm" clrForm>
             <clr-input-container>
-                <label>Link to route</label>
-                <input required clrInput type="text" name="example" formControlName="stravaLink"/>
+                <label class="clr-col-12 clr-col-md-2">Link to route</label>
+                <input class="clr-col-12 clr-col-md-10" required clrInput type="text" name="example" formControlName="stravaLink"/>
             </clr-input-container>
-            <button class="btn btn-primary" type="submit" (click)="submit()">Submit</button>
+            <button [disabled]="!stepOneForm.valid" class="btn btn-primary" type="submit" (click)="stepOneSubmit()">Submit</button>
         </form>
     </clr-wizard-page>
 

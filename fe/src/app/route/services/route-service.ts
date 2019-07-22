@@ -23,6 +23,24 @@ export class RoutesService {
     return this.http.get(this.path + '/route-comments?routeId=' + routeId);
   }
 
+  checkRouteUrl(url) {
+    const stravaRouteUrlReg = new RegExp('https:\/\/www.strava.com\/routes\/(\\d+)', 'i');
+    const match = stravaRouteUrlReg.exec(url);
+
+    if (match && match[1]) {
+      return match[1];
+    } else {
+      return false;
+    }
+  }
+
+  getRouteByUrl(url) {
+    const routeId = this.checkRouteUrl(url);
+    if (routeId) {
+      return this.getInfo(parseInt(routeId, 10));
+    }
+  }
+
   drawMap(element, gpx) {
     const map = leaflet.map(element);
 
