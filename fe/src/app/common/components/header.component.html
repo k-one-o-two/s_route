@@ -4,15 +4,21 @@
            <span class="title">s_route app</span>
        </a>
  </div>
- <span (click)="emitCreateEvt()">CREATE</span>
+ <div class="header-nav">
+   <a (click)="emitCreateEvt()" class="nav-link nav-icon-text"><clr-icon shape="bolt"></clr-icon>
+      <span class="nav-text">
+        Create a route
+      </span>
+  </a>
+ </div>
  <div class="header-actions">
-     <a href="javascript://" class="nav-link nav-icon-text">
+     <a *ngIf="currentUser.firstname || currentUser.lastname" class="nav-link nav-icon-text">
          <clr-icon shape="user"></clr-icon>
          <span class="nav-text">
            {{ currentUser.firstname }} {{ currentUser.lastname }}
          </span>
      </a>
      <div class="user-ava">
-       <img [src]="currentUser.profile_medium">
+       <img *ngIf="currentUser.profile_medium" [src]="currentUser.profile_medium">
      </div>
  </div>
