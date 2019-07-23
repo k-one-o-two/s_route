@@ -22,6 +22,14 @@ module.exports = class Strava {
     });
   }
 
+  async getGpx(id) {
+    const gGet = util.promisify(strava.routes.getGpx);
+
+    return await gGet({
+      id
+    });
+  }
+
   async getStravaRoute(id) {
 
   }

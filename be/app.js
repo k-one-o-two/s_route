@@ -40,6 +40,15 @@ router.get('/route/', async (ctx, next) => {
   ctx.body = selectedRoute;
 });
 
+router.get('/route-gpx/', async (ctx, next) => {
+  const id = ctx.request.query.id;
+  const gpx = await strava.getGpx(id);
+  ctx.body = {
+    gpx
+  };
+  // ctx.attachment(`${id}.gpx`);
+});
+
 router.get('/routes/', async (ctx, next) => {
   ctx.body = mockData.routes;
 });

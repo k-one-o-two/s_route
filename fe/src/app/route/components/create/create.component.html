@@ -13,6 +13,7 @@
                 <label class="clr-col-12 clr-col-md-2">Link to route</label>
                 <input class="clr-col-12 clr-col-md-10" required clrInput type="text" name="example" formControlName="stravaLink"/>
             </clr-input-container>
+            <div class="map"></div>
             <button [disabled]="!stepOneForm.valid" class="btn btn-primary" type="submit" (click)="stepOneSubmit()">Submit</button>
         </form>
     </clr-wizard-page>

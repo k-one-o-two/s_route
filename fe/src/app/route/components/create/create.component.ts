@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { ClrWizard } from '@clr/angular';
 import { FormGroup, FormControl, Validator, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { RoutesService } from '../../services/route-service';
@@ -19,7 +19,7 @@ export class CreateComponent implements OnInit {
   @Input() isOpen: boolean;
   @ViewChild('wizard') wizard: ClrWizard;
 
-  constructor(private routesService: RoutesService) {
+  constructor(private routesService: RoutesService, private element: ElementRef) {
     this.stepOneForm.setValidators(this.isValidUrl());
   }
 
@@ -32,7 +32,16 @@ export class CreateComponent implements OnInit {
     this.routesService.getRouteByUrl(this.stepOneForm.value.stravaLink)
       .subscribe(routeInfo => {
         console.info({ routeInfo });
-        this.stepOneReady = true;
+        const div = this.element.nativeElement.querySelector('.map');
+        console.info({ div });
+        this.routesService.getGpx(routeInfo['info']['id'])
+          .subscribe(gpx => {
+            console.info({ gpx });
+
+            this.routesService.drawMap(div, gpx['gpx']);
+            this.stepOneReady = true;
+          });
+
       });
   }
 

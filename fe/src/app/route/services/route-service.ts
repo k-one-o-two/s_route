@@ -41,6 +41,10 @@ export class RoutesService {
     }
   }
 
+  getGpx(routeId) {
+    return this.http.get(this.path + '/route-gpx?id=' + routeId);
+  }
+
   drawMap(element, gpx) {
     const map = leaflet.map(element);
 

@@ -5,7 +5,7 @@
        </a>
  </div>
  <div class="header-nav">
-   <a (click)="emitCreateEvt()" class="nav-link nav-icon-text"><clr-icon shape="bolt"></clr-icon>
+   <a *ngIf="currentUser.firstname || currentUser.lastname" (click)="emitCreateEvt()" class="nav-link nav-icon-text"><clr-icon shape="bolt"></clr-icon>
       <span class="nav-text">
         Create a route
       </span>
