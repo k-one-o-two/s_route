@@ -23,9 +23,10 @@ module.exports = class Strava {
   }
 
   async getGpx(id) {
-    const gGet = util.promisify(strava.routes.getGpx);
+    const gGet = util.promisify(strava.downloads.route);
 
     return await gGet({
+      type: 'gpx',
       id
     });
   }

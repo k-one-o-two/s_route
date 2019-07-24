@@ -11,16 +11,36 @@
         <form [formGroup]="stepOneForm" clrForm>
             <clr-input-container>
                 <label class="clr-col-12 clr-col-md-2">Link to route</label>
-                <input class="clr-col-12 clr-col-md-10" required clrInput type="text" name="example" formControlName="stravaLink"/>
+                <input class="clr-col-12 clr-col-md-10" required clrInput type="text" formControlName="stravaLink"/>
             </clr-input-container>
-            <div class="map"></div>
-            <button [disabled]="!stepOneForm.valid" class="btn btn-primary" type="submit" (click)="stepOneSubmit()">Submit</button>
+            <button [disabled]="!stepOneForm.valid" class="btn btn-primary" type="submit" (click)="stepOneSubmit()">
+              Check
+            </button>
+            <span [hidden]="!(stepOneSubmitted && !stepOneReady)" class="spinner spinner-md">
+                Loading...
+            </span>
+
+            <div *ngIf="routeInfo" class="routeInfo">
+              <span class="p2">Title:</span>&nbsp;<span class="p3">{{ routeInfo.info.name }}</span>
+            </div>
+
+            <div [hidden]="!stepOneReady" class="map"></div>
+
         </form>
     </clr-wizard-page>
 
     <clr-wizard-page>
         <ng-template clrPageTitle>Name and description</ng-template>
-        ...
+        <form [formGroup]="stepTwoForm" clrForm>
+          <clr-input-container>
+              <label class="clr-col-12 clr-col-md-2">Title</label>
+              <input class="clr-col-12 clr-col-md-10" required clrInput type="text" formControlName="title"/>
+          </clr-input-container>
+          <clr-textarea-container>
+              <label class="clr-col-12 clr-col-md-2">Description</label>
+              <textarea clrTextarea formControlName="description"></textarea>
+          </clr-textarea-container>
+        </form>
     </clr-wizard-page>
 
     <clr-wizard-page>

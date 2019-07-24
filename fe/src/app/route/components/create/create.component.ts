@@ -14,34 +14,42 @@ export class CreateComponent implements OnInit {
     stravaLink: new FormControl('')
   });
 
+  stepTwoForm = new FormGroup({
+    title: new FormControl(''),
+    description: new FormControl('')
+  });
+
   stepOneReady = false;
+  stepOneSubmitted = false;
+
+  routeInfo;
 
   @Input() isOpen: boolean;
-  @ViewChild('wizard') wizard: ClrWizard;
+  @ViewChild('wizard', { static: false }) wizard: ClrWizard;
 
   constructor(private routesService: RoutesService, private element: ElementRef) {
     this.stepOneForm.setValidators(this.isValidUrl());
   }
 
   ngOnInit() {
-    console.info(this.wizard);
   }
 
   stepOneSubmit() {
-    console.info(this.stepOneForm);
+    this.stepOneSubmitted = true;
     this.routesService.getRouteByUrl(this.stepOneForm.value.stravaLink)
       .subscribe(routeInfo => {
-        console.info({ routeInfo });
         const div = this.element.nativeElement.querySelector('.map');
-        console.info({ div });
+        this.routeInfo = routeInfo;
+        console.info({ routeInfo })
         this.routesService.getGpx(routeInfo['info']['id'])
           .subscribe(gpx => {
-            console.info({ gpx });
-
             this.routesService.drawMap(div, gpx['gpx']);
             this.stepOneReady = true;
-          });
 
+            this.stepTwoForm.patchValue({
+              title: this.routeInfo.info.name
+            })
+          });
       });
   }
 
