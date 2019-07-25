@@ -12,8 +12,13 @@ const Strava = require('./services/strava-api');
 const strava = new Strava(process.env);
 const fs = require('fs');
 
-const mockData = require('./data/mocks');
+const DB = require('./services/db');
+const db = new DB({
+  port: process.env.DB_PORT,
+  host: process.env.DB_HOST
+});
 
+const mockData = require('./data/mocks');
 
 app.use(koaCors());
 app.use(bodyParser());
@@ -50,6 +55,10 @@ router.get('/route-gpx/', async (ctx, next) => {
 });
 
 router.get('/routes/', async (ctx, next) => {
+  const fromDB = await db.get('routes');
+  console.info({
+    fromDB
+  });
   ctx.body = mockData.routes;
 });
 
@@ -88,6 +97,11 @@ router.post('/login/', async (ctx, next) => {
   } else {
     ctx.body = null;
   }
+});
+
+router.post('/route/', async (ctx, next) => {
+  const result = await db.insert('routes', [ctx.request.body]);
+  ctx.body = result;
 });
 
 app

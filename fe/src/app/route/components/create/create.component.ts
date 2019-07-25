@@ -16,7 +16,8 @@ export class CreateComponent implements OnInit {
 
   stepTwoForm = new FormGroup({
     title: new FormControl(''),
-    description: new FormControl('')
+    description: new FormControl(''),
+    stravaId: new FormControl()
   });
 
   stepOneReady = false;
@@ -47,8 +48,9 @@ export class CreateComponent implements OnInit {
             this.stepOneReady = true;
 
             this.stepTwoForm.patchValue({
-              title: this.routeInfo.info.name
-            })
+              title: this.routeInfo.info.name,
+              stravaId: routeInfo['info']['id']
+            });
           });
       });
   }
@@ -61,5 +63,11 @@ export class CreateComponent implements OnInit {
       }
       return;
     }
+  }
+
+  doFinish() {
+    console.info(this.stepTwoForm.value);
+    this.routesService.save(this.stepTwoForm.value)
+      .subscribe((done) => { console.info({ done }) })
   }
 }

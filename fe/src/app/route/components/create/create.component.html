@@ -1,4 +1,6 @@
-<clr-wizard #wizard [(clrWizardOpen)]="isOpen">
+<clr-wizard #wizard
+  (clrWizardOnFinish)="doFinish()"
+  [(clrWizardOpen)]="isOpen">
     <clr-wizard-title>Create a new route</clr-wizard-title>
 
     <clr-wizard-button [type]="'cancel'">Cancel</clr-wizard-button>
@@ -45,6 +47,6 @@
 
     <clr-wizard-page>
         <ng-template clrPageTitle>Preview</ng-template>
-        ...
+
     </clr-wizard-page>
 </clr-wizard>

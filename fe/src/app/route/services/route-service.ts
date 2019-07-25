@@ -57,4 +57,8 @@ export class RoutesService {
       map.fitBounds(e.target.getBounds());
     }).addTo(map);
   }
+
+  save(route) {
+    return this.http.post(this.path + '/route', route);
+  }
 }
