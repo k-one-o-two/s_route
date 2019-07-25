@@ -67,7 +67,7 @@ export class CreateComponent implements OnInit {
 
   doFinish() {
     console.info(this.stepTwoForm.value);
-    this.routesService.save(this.stepTwoForm.value)
+    this.routesService.save({ ...this.stepTwoForm.value, info: this.routeInfo })
       .subscribe((done) => { console.info({ done }) })
   }
 }

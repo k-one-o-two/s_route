@@ -59,7 +59,7 @@ router.get('/routes/', async (ctx, next) => {
   console.info({
     fromDB
   });
-  ctx.body = mockData.routes;
+  ctx.body = fromDB;
 });
 
 router.get('/route-comments/', async (ctx, next) => {
