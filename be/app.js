@@ -39,10 +39,8 @@ router.get('/current-user/', async (ctx, next) => {
 })
 
 router.get('/route/', async (ctx, next) => {
-  const id = ctx.request.query.id;
-  const selectedRoute = mockData.routes[0];
-  selectedRoute.info = await strava.getRoute(selectedRoute.stravaId);
-  ctx.body = selectedRoute;
+  const route = await db.getById('routes', ctx.request.query.id);
+  ctx.body = route;
 });
 
 router.get('/route-gpx/', async (ctx, next) => {
@@ -55,11 +53,8 @@ router.get('/route-gpx/', async (ctx, next) => {
 });
 
 router.get('/routes/', async (ctx, next) => {
-  const fromDB = await db.get('routes');
-  console.info({
-    fromDB
-  });
-  ctx.body = fromDB;
+  const routesList = await db.getIdsList('routes');
+  ctx.body = routesList;
 });
 
 router.get('/route-comments/', async (ctx, next) => {
@@ -100,7 +95,11 @@ router.post('/login/', async (ctx, next) => {
 });
 
 router.post('/route/', async (ctx, next) => {
-  const result = await db.insert('routes', [ctx.request.body]);
+  const route = ctx.request.body;
+  const gpx = await strava.getGpx(route.stravaId);
+  route.gpx = gpx;
+
+  const result = await db.insert('routes', [route]);
   ctx.body = result;
 });
 

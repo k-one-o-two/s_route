@@ -49,11 +49,26 @@ module.exports = class DB {
     })
   }
 
-  async get(table) {
+  async getById(table, id) {
     await this.connect();
 
     return new Promise((resolve, reject) => {
       r.table(table)
+        .get(id)
+        .run(this.connection, (err, result) => {
+          if (err) reject(err);
+
+          resolve(result);
+        })
+    })
+  }
+
+  async getIdsList(table) {
+    await this.connect();
+
+    return new Promise((resolve, reject) => {
+      r.table(table)
+        .pluck('id')
         .run(this.connection, (err, cursor) => {
           if (err) reject(err);
 
