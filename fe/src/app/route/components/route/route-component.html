@@ -1,19 +1,26 @@
 <div class="clr-row">
     <div class="clr-col-lg-6 clr-col-12">
-        <a (click)="toRoute()" [hidden]="!dataReady" class="card clickable">
-            <div class="card-header">
-                {{ routeTitle }}
+        <a (click)="toRoute()" class="card clickable">
+            <div class="card-block route-loading" [hidden]="dataReady">
+              <span class="spinner spinner-lg">
+                  Loading...
+              </span>
             </div>
-            <div class="card-img">
-                <div #map class="map"></div>
-            </div>
-            <div class="card-block">
-                <p class="card-text">
-                    Description: {{ routeDescription }}
-                </p>
-            </div>
-            <div class="card-footer">
-              Created by: {{ routeAuthor }}
+            <div [hidden]="!dataReady">
+              <div class="card-header">
+                  {{ routeTitle }}
+              </div>
+              <div class="card-img">
+                  <div #map class="map"></div>
+              </div>
+              <div class="card-block">
+                  <p class="card-text">
+                      Description: {{ routeDescription }}
+                  </p>
+              </div>
+              <div class="card-footer">
+                Created by: {{ routeAuthor }}
+              </div>
             </div>
         </a>
     </div>

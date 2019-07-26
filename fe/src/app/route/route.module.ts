@@ -7,7 +7,9 @@ import { ClrWizardModule, ClrFormsModule } from '@clr/angular'
 
 import { RouteComponent } from './components/route/route-component';
 import { RouteListComponent } from './components/list/route-list.component';
+import { RouteViewComponent } from './components/route-view/route-view.component';
 import { CreateComponent } from './components/create/create.component';
+import { CommentsListComponent } from './components/comments/comments-list.component';
 
 import { RoutesService } from './services/route-service';
 
@@ -16,6 +18,8 @@ import { RoutesService } from './services/route-service';
     RouteComponent,
     RouteListComponent,
     CreateComponent,
+    RouteViewComponent,
+    CommentsListComponent,
   ],
   imports: [
     CommonModule,
@@ -25,6 +29,7 @@ import { RoutesService } from './services/route-service';
   ],
   exports: [
     RouteListComponent,
+    RouteViewComponent,
     CreateComponent
   ],
   providers: [RoutesService]

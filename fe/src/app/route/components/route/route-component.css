@@ -1,1 +1,7 @@
 .map { height: 300px; }
+.route-loading {
+  /* height: 350px; */
+}
+.route-loading > .spinner {
+  margin-left: 45%;
+}
