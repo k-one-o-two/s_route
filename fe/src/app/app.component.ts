@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { map } from 'rxjs/operators';
+import { AppState } from './common/app.state';
+import { init } from './users/state/user.actions';
 
 @Component({
   selector: 'app-root',
@@ -9,11 +13,11 @@ export class AppComponent implements OnInit {
   title = 'routes';
   public createDialogVisible: boolean;
 
-  constructor() {
+  constructor(private store: Store<AppState>) {
   }
 
   ngOnInit() {
-
+    this.store.dispatch(init());
   }
 
   showCreateDialog() {

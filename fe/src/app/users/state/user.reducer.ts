@@ -1,6 +1,6 @@
 import { createReducer, on, Action } from '@ngrx/store';
 import { CurrentUserState } from './user.models';
-import { setUser, setAuthenticated } from './user.actions';
+import { setUser, setAuthenticated, init } from './user.actions';
 
 export const initialState: CurrentUserState = {
   currentUser: null,
@@ -17,6 +17,20 @@ const reducer = createReducer(
     ...state,
     isAuthenticated
   })),
+  on(init, (state) => {
+    console.info('onInit', );
+    const savedInSession = JSON.parse(localStorage.getItem('session'));
+    if (savedInSession.currentUser && savedInSession.isAuthenticated) {
+      return ({
+        ...state,
+        currentUser: savedInSession.currentUser,
+        isAuthenticated: savedInSession.isAuthenticated
+      });
+    }
+    return ({
+      ...state
+    });
+  }),
 );
 
 export function userReducer(

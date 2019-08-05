@@ -12,7 +12,7 @@ import { AppState } from '../app.state';
 })
 
 export class HeaderComponent implements OnInit {
-  public currentUser = {};
+  public currentUser = null;
   @Output() createRoute = new EventEmitter();
 
   constructor(
@@ -26,7 +26,8 @@ export class HeaderComponent implements OnInit {
     this.store
       .pipe(select(selectCurrentUser))
       .subscribe((user: any) => {
-        // console.info({ user });
+        console.info({ user });
+        this.currentUser = user;
       });
   }
 

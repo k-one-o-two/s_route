@@ -15,6 +15,7 @@ export class LoginGuard implements CanActivate {
       .pipe(
         select(selectIsAuthenticated),
         map((isAuthenticated: boolean) => {
+          console.info({ isAuthenticated });
           if (isAuthenticated) {
             return true;
           } else {

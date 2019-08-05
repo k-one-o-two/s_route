@@ -5,14 +5,14 @@
        </a>
  </div>
  <div class="header-nav">
-   <a *ngIf="currentUser.firstname || currentUser.lastname" (click)="emitCreateEvt()" class="nav-link nav-icon-text"><clr-icon shape="bolt"></clr-icon>
+   <a *ngIf="currentUser" (click)="emitCreateEvt()" class="nav-link nav-icon-text"><clr-icon shape="bolt"></clr-icon>
       <span class="nav-text">
         Create a route
       </span>
   </a>
  </div>
- <div class="header-actions">
-     <a *ngIf="currentUser.firstname || currentUser.lastname" class="nav-link nav-icon-text">
+ <div *ngIf="currentUser" class="header-actions">
+     <a class="nav-link nav-icon-text">
          <clr-icon shape="user"></clr-icon>
          <span class="nav-text">
            {{ currentUser.firstname }} {{ currentUser.lastname }}

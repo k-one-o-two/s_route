@@ -41,6 +41,11 @@ export class AuthService {
           console.info({ data });
           this.store.dispatch(setUser({ currentUser: data['athlete'] }));
           this.store.dispatch(setAuthenticated({ isAuthenticated: true }));
+
+          localStorage.setItem('session', JSON.stringify({
+            currentUser: data['athlete'],
+            isAuthenticated: true
+          }));
         })
       );
   }
