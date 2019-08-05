@@ -1,21 +1,26 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-
-import { AuthService } from '../services/auth.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { selectIsAuthenticated } from '../state/user.selectors';
+import { Store, select } from '@ngrx/store';
+import { AppState } from '../../common/app.state';
 
 @Injectable()
 export class LoginGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private store: Store<AppState>, private router: Router) { }
 
-  canActivate() {
-    const logged = this.authService.isLogged();
-    console.info({ logged });
-    if (logged) {
-      return true;
-    } else {
-      this.authService.logout();
-      this.router.navigate(['login']);
-      return false;
-    }
+  canActivate(): Observable<boolean> {
+    return this.store
+      .pipe(
+        select(selectIsAuthenticated),
+        map((isAuthenticated: boolean) => {
+          if (isAuthenticated) {
+            return true;
+          } else {
+            this.router.navigate(['login']);
+            return false;
+          }
+        }));
   }
 }

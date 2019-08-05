@@ -11,6 +11,8 @@ const routes: Routes = [
   { path: 'get-code', component: LoginComponent },
   { path: 'routes', component: RouteListComponent, canActivate: [LoginGuard] },
   { path: 'route/:id', component: RouteViewComponent, canActivate: [LoginGuard] },
+
+  { path: '', redirectTo: '/routes', pathMatch: 'full' },
 ];
 
 @NgModule({

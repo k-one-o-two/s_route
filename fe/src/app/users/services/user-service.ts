@@ -31,6 +31,10 @@ export class UserService {
     }
   }
 
+  fetchCurrentUser() {
+    return this.http.get(this.path + '/current-user');
+  }
+
   getCurrentUser() {
     const user = this.currentUser || JSON.parse(localStorage.getItem(this.localStorageKey));
     if (!user || user['errors']) {

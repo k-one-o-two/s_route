@@ -8,7 +8,7 @@ import { IRoute } from '../../interfaces';
   styleUrls: ['./route-component.css']
 })
 
-export class RouteComponent implements OnInit, AfterViewInit {
+export class RouteComponent implements OnInit {
   @Input() id;
   route = null;
   dataReady = false;

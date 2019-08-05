@@ -5,8 +5,8 @@ import { IComment } from '../../interfaces';
 
 @Component({
   selector: 'app-comments-list',
-  templateUrl: './comment-list-component.html',
-  styleUrls: ['./comment-list-component.css']
+  templateUrl: './comments-list.component.html',
+  styleUrls: ['./comments-list.component.css']
 })
 
 export class CommentsListComponent implements OnInit {

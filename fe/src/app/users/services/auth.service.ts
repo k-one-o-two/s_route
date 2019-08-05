@@ -4,6 +4,11 @@ import { environment } from '../../../environments/environment';
 import { UserService } from './user-service';
 import { tap } from 'rxjs/operators';
 
+import { setUser, setAuthenticated } from '../state/user.actions';
+// import { selectCurrentUser } from '../state/user.selectors';
+import { Store, select } from '@ngrx/store';
+import { AppState } from '../../common/app.state';
+
 interface IUser {
   name: string
   stravaId: number
@@ -16,7 +21,11 @@ export class AuthService {
 
   private currentUser = {};
 
-  constructor(private http: HttpClient, private userService: UserService) {
+  constructor(
+    private http: HttpClient,
+    private userService: UserService,
+    private store: Store<AppState>
+  ) {
     this.path = environment.apiUrl;
   }
 
@@ -28,7 +37,11 @@ export class AuthService {
     localStorage.setItem(this.localStorageKey, code);
     return this.http.post(this.path + '/login', { code })
       .pipe(
-        tap(data => this.userService.setCurrentUser(data['athlete']))
+        tap(data => {
+          console.info({ data });
+          this.store.dispatch(setUser({ currentUser: data['athlete'] }));
+          this.store.dispatch(setAuthenticated({ isAuthenticated: true }));
+        })
       );
   }
 

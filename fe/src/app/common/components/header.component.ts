@@ -1,5 +1,9 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { UserService } from '../../users/services/user-service';
+import { getUser } from '../../users/state/user.actions';
+import { selectCurrentUser } from '../../users/state/user.selectors';
+import { Store, select } from '@ngrx/store';
+import { AppState } from '../app.state';
 
 @Component({
   selector: 'app-header',
@@ -11,13 +15,18 @@ export class HeaderComponent implements OnInit {
   public currentUser = {};
   @Output() createRoute = new EventEmitter();
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private store: Store<AppState>
+  ) { }
 
   ngOnInit() {
-    this.userService.getCurrentUser()
-      .subscribe(user => {
-        console.info(this.currentUser);
-        this.currentUser = user;
+    this.store.dispatch(getUser());
+
+    this.store
+      .pipe(select(selectCurrentUser))
+      .subscribe((user: any) => {
+        // console.info({ user });
       });
   }
 
