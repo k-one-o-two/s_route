@@ -80,4 +80,40 @@ module.exports = class DB {
         })
     })
   }
+
+  async getAllData(table) {
+    await this.connect();
+
+    return new Promise((resolve, reject) => {
+      r.table(table)
+        .run(this.connection, (err, cursor) => {
+          if (err) reject(err);
+
+          cursor.toArray(function(err, result) {
+            if (err) reject(err);
+
+            resolve(result);
+          });
+        })
+    })
+  }
+
+  async getByRowValue(table, row, value) {
+    await this.connect();
+
+    return new Promise((resolve, reject) => {
+      r.table(table)
+        .filter(r.row(row)
+          .eq(value))
+        .run(this.connection, (err, cursor) => {
+          if (err) reject(err);
+
+          cursor.toArray(function(err, result) {
+            if (err) reject(err);
+
+            resolve(result);
+          });
+        })
+    })
+  }
 }

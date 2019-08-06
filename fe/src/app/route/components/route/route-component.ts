@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, ElementRef, AfterViewInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { RoutesService } from '../../services/route-service';
 import { IRoute } from '../../interfaces';
 
@@ -10,6 +11,7 @@ import { IRoute } from '../../interfaces';
 
 export class RouteComponent implements OnInit {
   @Input() id;
+  @Input() inList: boolean;
   route = null;
   dataReady = false;
   dataObservable;
@@ -17,7 +19,8 @@ export class RouteComponent implements OnInit {
 
   constructor(
     private routesService: RoutesService,
-    private element: ElementRef
+    private element: ElementRef,
+    private router: Router
   ) { }
 
   get routeTitle() {
@@ -45,5 +48,9 @@ export class RouteComponent implements OnInit {
         const div = this.element.nativeElement.querySelector('.map');
         this.routesService.drawMap(div, this.route.gpx);
       })
+  }
+
+  toRoute() {
+    this.router.navigate(['/route', { id: this.id }]);
   }
 }

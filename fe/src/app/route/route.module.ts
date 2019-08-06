@@ -10,6 +10,7 @@ import { RouteListComponent } from './components/list/route-list.component';
 import { RouteViewComponent } from './components/route-view/route-view.component';
 import { CreateComponent } from './components/create/create.component';
 import { CommentsListComponent } from './components/comments/comments-list.component';
+import { AddCommentComponent } from './components/add-comment/add-comment.component';
 
 import { RoutesService } from './services/route-service';
 
@@ -20,6 +21,7 @@ import { RoutesService } from './services/route-service';
     CreateComponent,
     RouteViewComponent,
     CommentsListComponent,
+    AddCommentComponent,
   ],
   imports: [
     CommonModule,

@@ -15,12 +15,19 @@ export class RoutesService {
     return this.http.get(this.path + '/routes');
   }
 
-  getInfo(routeId: number) {
+  getInfo(routeId: string) {
     return this.http.get(this.path + '/route?id=' + routeId);
   }
 
-  getComments(routeId: number) {
+  getComments(routeId: string) {
     return this.http.get(this.path + '/route-comments?routeId=' + routeId);
+  }
+
+  addComment(routeId: string, comment: string) {
+    return this.http.post(this.path + '/route-comments', {
+      routeId,
+      comment
+    });
   }
 
   checkRouteUrl(url) {

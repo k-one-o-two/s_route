@@ -41,4 +41,11 @@ router.post('/route/', async (ctx, next) => {
   ctx.body = result;
 });
 
+router.post('/route-comments/', async (ctx, next) => {
+  console.info(ctx.request.body);
+
+  const result = await db.insert('comments', [ctx.request.body]);
+  ctx.body = result;
+});
+
 module.exports = router;

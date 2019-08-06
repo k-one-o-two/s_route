@@ -18,7 +18,6 @@ const reducer = createReducer(
     isAuthenticated
   })),
   on(init, (state) => {
-    console.info('onInit', );
     const savedInSession = JSON.parse(localStorage.getItem('session'));
     if (savedInSession.currentUser && savedInSession.isAuthenticated) {
       return ({

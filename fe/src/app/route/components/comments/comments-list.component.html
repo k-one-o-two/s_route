@@ -1,0 +1,16 @@
+<h1>Comments</h1>
+<div *ngFor="let commentObject of commentsList">
+  {{ commentObject.comment }}
+</div>
+
+<form [formGroup]="addCommentForm" clrForm>
+  <clr-textarea-container>
+      <label class="clr-col-12 clr-col-md-2">Add comment</label>
+      <textarea required clrTextarea formControlName="comment"></textarea>
+  </clr-textarea-container>
+
+  <button [disabled]="!addCommentForm.valid"
+    class="btn btn-primary" type="submit" (click)="addComment()">
+    Check
+  </button>
+</form>

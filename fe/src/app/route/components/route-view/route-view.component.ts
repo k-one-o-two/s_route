@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RoutesService } from '../../services/route-service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { IRoute } from '../../interfaces';
 
@@ -10,8 +11,10 @@ import { IRoute } from '../../interfaces';
 })
 
 export class RouteViewComponent implements OnInit {
-  constructor(private routesService: RoutesService) { }
+  public id: string;
+  constructor(private routesService: RoutesService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.id = this.activatedRoute.snapshot.params.id;
   }
 }

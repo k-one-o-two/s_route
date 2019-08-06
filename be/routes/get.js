@@ -46,7 +46,12 @@ router.get('/routes/', async (ctx, next) => {
   ctx.body = routesList;
 });
 
-router.get('/route-comments/', async (ctx, next) => {});
+router.get('/route-comments/', async (ctx, next) => {
+  const routeId = ctx.request.query.routeId;
+
+  const commentsList = await db.getByRowValue('comments', 'routeId', routeId);
+  ctx.body = commentsList;
+});
 
 router.get('/search-routes/', async (ctx, next) => {});
 
