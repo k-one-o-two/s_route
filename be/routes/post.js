@@ -22,11 +22,34 @@ router.post('/login/', async (ctx, next) => {
     code
   });
   if (code) {
-    const currentUser = await strava.setCode(code);
-    console.info({
-      currentUser
-    });
-    ctx.body = currentUser;
+    const responce = await strava.setCode(code);
+    const currentUser = responce.athlete;
+
+    let uid;
+
+    // check if exists
+    const alreadySavedUser = await db.getByRowValue('users', 'stravaId', currentUser.id);
+    if (alreadySavedUser.length) {
+      console.info({
+        alreadySavedUser
+      });
+      // update
+      // await db.updateByRowValue()
+      ctx.body = {
+        ...alreadySavedUser[0]
+      };
+    } else {
+      currentUser.stravaId = currentUser.id;
+      delete currentUser.id;
+      const result = await db.insert('users', [currentUser]);
+
+      uid = result.generated_keys[0];
+
+      ctx.body = {
+        id: uid,
+        ...currentUser
+      };
+    }
   } else {
     ctx.body = null;
   }

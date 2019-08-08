@@ -3,12 +3,14 @@ import { ofType, createEffect, Actions } from '@ngrx/effects';
 import { exhaustMap, map } from 'rxjs/operators';
 import { getUser, setUser } from './user.actions';
 import { UserService } from '../services/user-service';
+import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class UserEffects {
   constructor(
     private actions$: Actions,
-    private service: UserService
+    private userService: UserService,
+    private authService: AuthService
   ) { }
 
   getUser = createEffect(
@@ -16,9 +18,12 @@ export class UserEffects {
       this.actions$.pipe(
         ofType(getUser),
         exhaustMap(() => {
-          return this.service.fetchCurrentUser().pipe(
+          return this.userService.fetchCurrentUser().pipe(
             map(user => {
-              console.info('EFFECT', { user });
+              if (user['errors']) {
+                this.authService.logout();
+                return setUser({ currentUser: null });
+              }
               return setUser({ currentUser: user });
             })
           )

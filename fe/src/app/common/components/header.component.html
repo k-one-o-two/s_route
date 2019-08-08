@@ -11,9 +11,11 @@
       </span>
   </a>
  </div>
+ <div class="header-actions">
+   <clr-icon (click)="logout()" shape="logout"></clr-icon>
+ </div>
  <div *ngIf="currentUser" class="header-actions">
      <a class="nav-link nav-icon-text">
-         <clr-icon shape="user"></clr-icon>
          <span class="nav-text">
            {{ currentUser.firstname }} {{ currentUser.lastname }}
          </span>

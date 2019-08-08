@@ -4,6 +4,8 @@ import { environment } from '../../../environments/environment';
 import { UserService } from './user-service';
 import { tap } from 'rxjs/operators';
 
+import { Router } from '@angular/router';
+
 import { setUser, setAuthenticated } from '../state/user.actions';
 // import { selectCurrentUser } from '../state/user.selectors';
 import { Store, select } from '@ngrx/store';
@@ -24,7 +26,8 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private userService: UserService,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private router: Router
   ) {
     this.path = environment.apiUrl;
   }
@@ -56,6 +59,7 @@ export class AuthService {
 
   logout() {
     localStorage.setItem(this.localStorageKey, null);
+    this.router.navigate(['login']);
   }
 
   isLogged(): boolean {

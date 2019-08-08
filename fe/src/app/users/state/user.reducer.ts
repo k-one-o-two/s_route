@@ -1,6 +1,7 @@
 import { createReducer, on, Action } from '@ngrx/store';
 import { CurrentUserState } from './user.models';
 import { setUser, setAuthenticated, init } from './user.actions';
+import { UserService } from '../services/user-service';
 
 export const initialState: CurrentUserState = {
   currentUser: null,
@@ -20,6 +21,9 @@ const reducer = createReducer(
   on(init, (state) => {
     const savedInSession = JSON.parse(localStorage.getItem('session'));
     if (savedInSession.currentUser && savedInSession.isAuthenticated) {
+
+      // todo validation
+
       return ({
         ...state,
         currentUser: savedInSession.currentUser,

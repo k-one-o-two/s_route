@@ -23,9 +23,10 @@ export class RoutesService {
     return this.http.get(this.path + '/route-comments?routeId=' + routeId);
   }
 
-  addComment(routeId: string, comment: string) {
+  addComment(routeId: string, comment: string, userId: number) {
     return this.http.post(this.path + '/route-comments', {
       routeId,
+      userId,
       comment
     });
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { UserService } from '../../users/services/user-service';
+import { AuthService } from '../../users/services/auth.service';
 import { getUser } from '../../users/state/user.actions';
 import { selectCurrentUser } from '../../users/state/user.selectors';
 import { Store, select } from '@ngrx/store';
@@ -16,23 +16,27 @@ export class HeaderComponent implements OnInit {
   @Output() createRoute = new EventEmitter();
 
   constructor(
-    private userService: UserService,
+    private authService: AuthService,
     private store: Store<AppState>
   ) { }
 
   ngOnInit() {
     this.store.dispatch(getUser());
 
+    // todo takeUntill - so not to remove it manually
     this.store
       .pipe(select(selectCurrentUser))
       .subscribe((user: any) => {
-        console.info({ user });
         this.currentUser = user;
       });
   }
 
   emitCreateEvt() {
-    console.info('emitCreateEvt');
     this.createRoute.emit({ create: true });
+  }
+
+  logout() {
+    this.currentUser = null;
+    this.authService.logout();
   }
 }

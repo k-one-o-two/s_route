@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-// import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -32,6 +31,7 @@ export class UserService {
   }
 
   fetchCurrentUser() {
+    console.trace();
     return this.http.get(this.path + '/current-user');
   }
 
