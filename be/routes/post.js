@@ -18,9 +18,6 @@ const db = new DB({
 
 router.post('/login/', async (ctx, next) => {
   const code = ctx.request.body['code'];
-  console.info({
-    code
-  });
   if (code) {
     const responce = await strava.setCode(code);
     const currentUser = responce.athlete;
@@ -30,9 +27,6 @@ router.post('/login/', async (ctx, next) => {
     // check if exists
     const alreadySavedUser = await db.getByRowValue('users', 'stravaId', currentUser.id);
     if (alreadySavedUser.length) {
-      console.info({
-        alreadySavedUser
-      });
       // update
       // await db.updateByRowValue()
       ctx.body = {
@@ -53,6 +47,10 @@ router.post('/login/', async (ctx, next) => {
   } else {
     ctx.body = null;
   }
+});
+
+router.post('/touch/', async (ctx) => {
+  const currentUser = await strava.getCurrentUser();
 });
 
 router.post('/logout/', async (ctx, next) => {

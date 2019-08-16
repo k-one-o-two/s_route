@@ -44,10 +44,6 @@ module.exports = class Strava {
         "grant_type": "authorization_code"
       };
 
-      console.info({
-        postData
-      });
-
       unirest.post('https://www.strava.com/oauth/token')
         .headers({
           'Accept': 'application/json',

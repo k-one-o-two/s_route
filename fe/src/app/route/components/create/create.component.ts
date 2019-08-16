@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, OnChanges, Output, EventEmitter } from '@angular/core';
 import { ClrWizard } from '@clr/angular';
 import { FormGroup, FormControl, Validator, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { RoutesService } from '../../services/route-service';
@@ -6,10 +6,10 @@ import { RoutesService } from '../../services/route-service';
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.css']
+  styleUrls: ['./create.component.scss']
 })
 
-export class CreateComponent implements OnInit {
+export class CreateComponent implements OnInit, OnChanges {
   stepOneForm = new FormGroup({
     stravaLink: new FormControl('')
   });
@@ -26,6 +26,7 @@ export class CreateComponent implements OnInit {
   routeInfo;
 
   @Input() isOpen: boolean;
+  @Output() onClose = new EventEmitter();
   @ViewChild('wizard', { static: false }) wizard: ClrWizard;
 
   constructor(private routesService: RoutesService, private element: ElementRef) {
@@ -35,13 +36,16 @@ export class CreateComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngOnChanges(changes) {
+    console.info({ changes })
+  }
+
   stepOneSubmit() {
     this.stepOneSubmitted = true;
     this.routesService.getRouteByUrl(this.stepOneForm.value.stravaLink)
       .subscribe(routeInfo => {
         const div = this.element.nativeElement.querySelector('.map');
         this.routeInfo = routeInfo;
-        console.info({ routeInfo })
         this.routesService.getGpx(routeInfo['info']['id'])
           .subscribe(gpx => {
             this.routesService.drawMap(div, gpx['gpx']);
@@ -69,5 +73,11 @@ export class CreateComponent implements OnInit {
     console.info(this.stepTwoForm.value);
     this.routesService.save({ ...this.stepTwoForm.value, info: this.routeInfo })
       .subscribe((done) => { console.info({ done }) })
+  }
+
+  onCloseHandler() {
+    console.info('onClose');
+    this.onClose.emit();
+    // this.isOpen = false;
   }
 }

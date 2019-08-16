@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
   }
 
   showCreateDialog() {
-    console.info('show');
+    console.info('showCreateDialog');
     this.createDialogVisible = true;
   }
 }

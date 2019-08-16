@@ -139,14 +139,10 @@ module.exports = class DB {
         .filter(r.row(row)
           .eq(value))
         .update(updateObj)
-        .run(this.connection, (err, cursor) => {
+        .run(this.connection, (err, result) => {
           if (err) reject(err);
 
-          cursor.toArray(function(err, result) {
-            if (err) reject(err);
-
-            resolve(result);
-          });
+          resolve(result);
         })
     })
   }
@@ -158,9 +154,6 @@ module.exports = class DB {
 
     return new Promise((resolve, reject) => {
       r.table('comments')
-        // .orderBy({
-        //   index: "timestamp"
-        // })
         .filter(r.row('routeId')
           .eq(routeId))
         .eqJoin("userId", r.table("users"))
@@ -170,11 +163,6 @@ module.exports = class DB {
 
           cursor.toArray((err, result) => {
             if (err) reject(err);
-
-            console.info({
-              result
-            })
-
             resolve(result);
           });
         })

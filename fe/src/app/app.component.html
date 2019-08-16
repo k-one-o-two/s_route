@@ -16,5 +16,5 @@
         <!-- </nav> -->
     </div>
 </div>
-<app-create [isOpen]="createDialogVisible">
+<app-create [isOpen]="createDialogVisible" (onClose)="createDialogVisible = false">
 </app-create>

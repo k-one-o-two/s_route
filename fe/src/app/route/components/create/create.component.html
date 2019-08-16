@@ -1,5 +1,6 @@
 <clr-wizard #wizard
   (clrWizardOnFinish)="doFinish()"
+  (clrWizardOnCancel)="onCloseHandler()"
   [(clrWizardOpen)]="isOpen">
     <clr-wizard-title>Create a new route</clr-wizard-title>
 
@@ -13,9 +14,10 @@
         <form [formGroup]="stepOneForm" clrForm>
             <clr-input-container>
                 <label class="clr-col-12 clr-col-md-2">Link to route</label>
-                <input class="clr-col-12 clr-col-md-10" required clrInput type="text" formControlName="stravaLink"/>
+                <input class="clr-col-12 clr-col-md-10 full-width"
+                required clrInput type="text" formControlName="stravaLink"/>
             </clr-input-container>
-            <button [disabled]="!stepOneForm.valid" class="btn btn-primary" type="submit" (click)="stepOneSubmit()">
+            <button [disabled]="!stepOneForm.valid" class="btn btn-primary check-btn" type="submit" (click)="stepOneSubmit()">
               Check
             </button>
             <span [hidden]="!(stepOneSubmitted && !stepOneReady)" class="spinner spinner-md">

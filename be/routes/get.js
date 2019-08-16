@@ -23,15 +23,21 @@ router.get('/user/', async (ctx, next) => {
 router.get('/current-user/', async (ctx, next) => {
   const user = await strava.getCurrentUser();
   const localUser = await db.getByRowValue('users', 'stravaId', user.id);
-  console.info({
-    localUser
-  });
 
   user.stravaId = user.id;
   user.id = localUser[0].id;
 
-  console.info({
-    user
+  const updateRes = await db.updateByRowValue('users', 'stravaId', user.stravaId, {
+    username: user.username,
+    firstname: user.firstname,
+    lastname: user.lastname,
+    city: user.city,
+    state: user.state,
+    country: user.country,
+    sex: user.sex,
+    summit: user.summit,
+    profile_medium: user.profile_medium,
+    profile: user.profile
   });
 
   ctx.body = user;
