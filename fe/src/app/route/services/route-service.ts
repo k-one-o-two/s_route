@@ -11,23 +11,39 @@ export class RoutesService {
     this.path = environment.apiUrl;
   }
 
+
+  /**
+   * getList - gets routes list
+   */
   getList() {
     return this.http.get(this.path + '/routes');
   }
 
+
+  /**
+   * getInfo - gets route stored in DB by internal id (not a strava id!)
+   *
+   * @param routeId: string route id
+   * @return description
+   */
   getInfo(routeId: string) {
     return this.http.get(this.path + '/route?id=' + routeId);
+  }
+
+  getStravaRoute(stravaId: number) {
+    return this.http.get(this.path + '/strava-route?id=' + stravaId);
   }
 
   getComments(routeId: string) {
     return this.http.get(this.path + '/route-comments?routeId=' + routeId);
   }
 
-  addComment(routeId: string, comment: string, userId: number) {
+  addComment(routeId: string, comment: string, userId: number, parentCommentId?: string) {
     return this.http.post(this.path + '/route-comments', {
       routeId,
       userId,
-      comment
+      comment,
+      parentCommentId
     });
   }
 
@@ -43,9 +59,9 @@ export class RoutesService {
   }
 
   getRouteByUrl(url) {
-    const routeId = this.checkRouteUrl(url);
-    if (routeId) {
-      return this.getInfo(parseInt(routeId, 10));
+    const stravaId = this.checkRouteUrl(url);
+    if (stravaId) {
+      return this.getStravaRoute(parseInt(stravaId, 10));
     }
   }
 

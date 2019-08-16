@@ -55,6 +55,10 @@ router.post('/login/', async (ctx, next) => {
   }
 });
 
+router.post('/logout/', async (ctx, next) => {
+  // what for?
+});
+
 router.post('/route/', async (ctx, next) => {
   const route = ctx.request.body;
   const gpx = await strava.getGpx(route.stravaId);
@@ -65,9 +69,10 @@ router.post('/route/', async (ctx, next) => {
 });
 
 router.post('/route-comments/', async (ctx, next) => {
-  console.info(ctx.request.body);
-
-  const result = await db.insert('comments', [ctx.request.body]);
+  const comment = ctx.request.body;
+  comment.timestamp = new Date();
+  let result;
+  result = await db.insert('comments', [comment]);
   ctx.body = result;
 });
 

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import { AppState } from './common/app.state';
-import { init } from './users/state/user.actions';
+import { getUser } from './users/state/user.actions';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(init());
+    this.store.dispatch(getUser());
   }
 
   showCreateDialog() {

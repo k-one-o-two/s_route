@@ -35,6 +35,20 @@ module.exports = class DB {
     })
   }
 
+  async cleanTable(name) {
+    await this.connect();
+
+    return new Promise((resolve, reject) => {
+      r.table(name)
+        .delete()
+        .run(this.connection, (err, result) => {
+          if (err) reject(err);
+
+          resolve(result);
+        });
+    })
+  }
+
   async insert(table, data) {
     await this.connect();
 
@@ -130,6 +144,36 @@ module.exports = class DB {
 
           cursor.toArray(function(err, result) {
             if (err) reject(err);
+
+            resolve(result);
+          });
+        })
+    })
+  }
+
+
+  // app specific methods
+  async getComments(routeId) {
+    await this.connect();
+
+    return new Promise((resolve, reject) => {
+      r.table('comments')
+        // .orderBy({
+        //   index: "timestamp"
+        // })
+        .filter(r.row('routeId')
+          .eq(routeId))
+        .eqJoin("userId", r.table("users"))
+        .zip()
+        .run(this.connection, (err, cursor) => {
+          if (err) reject(err);
+
+          cursor.toArray((err, result) => {
+            if (err) reject(err);
+
+            console.info({
+              result
+            })
 
             resolve(result);
           });

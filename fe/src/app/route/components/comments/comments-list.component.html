@@ -1,6 +1,6 @@
 <h1>Comments</h1>
-<div *ngFor="let commentObject of commentsList">
-  {{ commentObject.comment }}
+<div class="comment" *ngFor="let comment of commentsList">
+  <app-comment [comment]="comment"></app-comment>
 </div>
 
 <form [formGroup]="addCommentForm" clrForm>
@@ -11,6 +11,6 @@
 
   <button [disabled]="!addCommentForm.valid"
     class="btn btn-primary" type="submit" (click)="addComment()">
-    Check
+    send
   </button>
 </form>

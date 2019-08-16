@@ -13,7 +13,7 @@ import { IComment } from '../../interfaces';
 @Component({
   selector: 'app-comments-list',
   templateUrl: './comments-list.component.html',
-  styleUrls: ['./comments-list.component.css']
+  styleUrls: ['./comments-list.component.scss']
 })
 
 export class CommentsListComponent implements OnInit {
@@ -41,12 +41,15 @@ export class CommentsListComponent implements OnInit {
 
   getComments() {
     this.routesService.getComments(this.routeId)
-      .subscribe((data: IComment[]) => this.commentsList = data);
+      .subscribe((data: IComment[]) => {
+        this.commentsList = data;
+      });
   }
 
   addComment() {
     this.routesService.addComment(this.routeId, this.addCommentForm.value.comment, this.currentUser.id)
       .subscribe(() => {
+        this.addCommentForm.reset();
         this.getComments();
       });
   }

@@ -21,8 +21,6 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.store.dispatch(getUser());
-
     // todo takeUntill - so not to remove it manually
     this.store
       .pipe(select(selectCurrentUser))

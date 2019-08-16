@@ -7,6 +7,7 @@ import { LoginComponent } from './components/login.component';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user-service';
 import { LoginGuard } from './guards/login.guard';
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,6 @@ import { LoginGuard } from './guards/login.guard';
   exports: [
     LoginComponent,
   ],
-  providers: [AuthService, LoginGuard, UserService]
+  providers: [AuthService, LoginGuard, AuthGuard, UserService]
 })
 export class UsersModule { }

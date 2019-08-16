@@ -31,7 +31,6 @@ export class UserService {
   }
 
   fetchCurrentUser() {
-    console.trace();
     return this.http.get(this.path + '/current-user');
   }
 

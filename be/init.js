@@ -9,7 +9,7 @@ const db = new DB({
 
 async function main() {
   // await db.createTable('routes');
-  await db.createTable('users');
+  await db.cleanTable('comments');
 }
 
 main();

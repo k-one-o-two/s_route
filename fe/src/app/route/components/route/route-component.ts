@@ -51,6 +51,6 @@ export class RouteComponent implements OnInit {
   }
 
   toRoute() {
-    this.router.navigate(['/route', { id: this.id }]);
+    this.router.navigate(['/route', this.id]);
   }
 }

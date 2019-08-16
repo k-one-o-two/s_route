@@ -22,14 +22,29 @@ router.get('/user/', async (ctx, next) => {
 
 router.get('/current-user/', async (ctx, next) => {
   const user = await strava.getCurrentUser();
+  const localUser = await db.getByRowValue('users', 'stravaId', user.id);
+  console.info({
+    localUser
+  });
+
+  user.stravaId = user.id;
+  user.id = localUser[0].id;
+
   console.info({
     user
   });
+
   ctx.body = user;
 })
 
 router.get('/route/', async (ctx, next) => {
   const route = await db.getById('routes', ctx.request.query.id);
+  ctx.body = route;
+});
+
+router.get('/strava-route/', async (ctx, next) => {
+  const stravaId = ctx.request.query.id;
+  const route = await strava.getRoute(stravaId)
   ctx.body = route;
 });
 
@@ -49,7 +64,7 @@ router.get('/routes/', async (ctx, next) => {
 router.get('/route-comments/', async (ctx, next) => {
   const routeId = ctx.request.query.routeId;
 
-  const commentsList = await db.getByRowValue('comments', 'routeId', routeId);
+  const commentsList = await db.getComments(routeId);
   ctx.body = commentsList;
 });
 

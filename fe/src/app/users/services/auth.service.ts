@@ -58,7 +58,7 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.setItem(this.localStorageKey, null);
+    localStorage.setItem('session', null);
     this.router.navigate(['login']);
   }
 

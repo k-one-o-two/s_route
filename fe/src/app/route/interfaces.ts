@@ -5,9 +5,11 @@ export interface IRoute {
 }
 
 export interface IComment {
-  commentId: number
+  id: string
+  parentCommentId: string
   authorId: number
   parentId: number
   contents: string
+  routeId: string
 }
 // export interface IRouteList

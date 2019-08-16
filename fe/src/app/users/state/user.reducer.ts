@@ -10,17 +10,28 @@ export const initialState: CurrentUserState = {
 
 const reducer = createReducer(
   initialState,
-  on(setUser, (state, { currentUser }) => ({
-    ...state,
-    currentUser
-  })),
+  on(setUser, (state, { currentUser }) => {
+    console.info('gonna set user', { currentUser });
+
+    localStorage.setItem('session', JSON.stringify({
+      currentUser: currentUser,
+      isAuthenticated: true
+    }));
+
+    return ({
+      ...state,
+      currentUser,
+      isAuthenticated: true
+    });
+  }),
   on(setAuthenticated, (state, { isAuthenticated }) => ({
     ...state,
     isAuthenticated
   })),
   on(init, (state) => {
     const savedInSession = JSON.parse(localStorage.getItem('session'));
-    if (savedInSession.currentUser && savedInSession.isAuthenticated) {
+    console.info({ savedInSession });
+    if (savedInSession.isAuthenticated) {
 
       // todo validation
 
