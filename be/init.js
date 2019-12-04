@@ -8,8 +8,14 @@ const db = new DB({
 });
 
 async function main() {
-  // await db.createTable('routes');
-  await db.cleanTable('comments');
+  await db.cleanDb();
+
+  await db.createTable('routes');
+  await db.createTable('comments');
+  await db.createTable('users');
+
+  console.log('all set up, exiting...');
+  process.exit(0);
 }
 
 main();

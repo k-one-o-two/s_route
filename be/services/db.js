@@ -1,6 +1,8 @@
 const r = require('rethinkdb');
 const util = require('util');
 
+const DB_NAME = 'DB_NAME';
+
 module.exports = class DB {
   constructor(config) {
     this.port = config.port;
@@ -21,15 +23,33 @@ module.exports = class DB {
     }
   }
 
+  async cleanDb() {
+    await this.connect();
+
+    let dropResult;
+    try {
+      dropResult = await r.dbDrop(DB_NAME)
+        .run(this.connection, () => {});
+    } catch (e) {
+      console.log(e);
+    }
+
+    return r.dbCreate(DB_NAME)
+      .run(this.connection, (res) => {
+        console.log(`database ${DB_NAME} was created`);
+      });
+  }
+
   async createTable(name) {
     await this.connect();
 
     return new Promise((resolve, reject) => {
-      r.db('test')
+      r.db(DB_NAME)
         .tableCreate(name)
         .run(this.connection, (err, result) => {
           if (err) reject(err);
 
+          console.log(`table ${name} was created`);
           resolve(result);
         });
     })
