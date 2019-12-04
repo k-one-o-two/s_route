@@ -25,20 +25,22 @@ router.get('/current-user/', async (ctx, next) => {
   const localUser = await db.getByRowValue('users', 'stravaId', user.id);
 
   user.stravaId = user.id;
-  user.id = localUser[0].id;
+  if (localUser[0]) {
+    user.id = localUser[0].id;
 
-  const updateRes = await db.updateByRowValue('users', 'stravaId', user.stravaId, {
-    username: user.username,
-    firstname: user.firstname,
-    lastname: user.lastname,
-    city: user.city,
-    state: user.state,
-    country: user.country,
-    sex: user.sex,
-    summit: user.summit,
-    profile_medium: user.profile_medium,
-    profile: user.profile
-  });
+    const updateRes = await db.updateByRowValue('users', 'stravaId', user.stravaId, {
+      username: user.username,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      city: user.city,
+      state: user.state,
+      country: user.country,
+      sex: user.sex,
+      summit: user.summit,
+      profile_medium: user.profile_medium,
+      profile: user.profile
+    });
+  }
 
   ctx.body = user;
 })
