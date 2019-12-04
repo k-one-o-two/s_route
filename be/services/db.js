@@ -1,7 +1,7 @@
 const r = require('rethinkdb');
 const util = require('util');
 
-const DB_NAME = 'DB_NAME';
+const DB_NAME = 'test';
 
 module.exports = class DB {
   constructor(config) {
