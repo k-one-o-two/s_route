@@ -25,7 +25,7 @@
             </span>
 
             <div *ngIf="routeInfo" class="routeInfo">
-              <span *ngIf="routeInfo.info" class="p2">Title:</span>&nbsp;<span class="p3">{{ routeInfo.info.name }}</span>
+              <span *ngIf="routeInfo.name" class="p2">Title:</span>&nbsp;<span class="p3">{{ routeInfo.name }}</span>
             </div>
 
             <div [hidden]="!stepOneReady" class="map"></div>

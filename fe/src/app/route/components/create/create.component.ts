@@ -44,16 +44,17 @@ export class CreateComponent implements OnInit, OnChanges {
     this.stepOneSubmitted = true;
     this.routesService.getRouteByUrl(this.stepOneForm.value.stravaLink)
       .subscribe(routeInfo => {
+        console.info({ routeInfo });
         const div = this.element.nativeElement.querySelector('.map');
         this.routeInfo = routeInfo;
-        this.routesService.getGpx(routeInfo['info']['id'])
+        this.routesService.getGpx(routeInfo['id'])
           .subscribe(gpx => {
             this.routesService.drawMap(div, gpx['gpx']);
             this.stepOneReady = true;
 
             this.stepTwoForm.patchValue({
-              title: this.routeInfo.info.name,
-              stravaId: routeInfo['info']['id']
+              title: this.routeInfo.name,
+              stravaId: routeInfo['id']
             });
           });
       });
